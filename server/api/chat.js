@@ -3,7 +3,7 @@ import { createOpenAI } from '@ai-sdk/openai'
 import { z } from 'zod';
 export default defineEventHandler(async (event) => {
 	const openai = createOpenAI({ apiKey: process.env.OPEN_AI })
-	const messages = [{ role:"user", content:"What's the weather in Rome?"}]
+	const {messages} = await readBody(event)
 	const result = await streamText({
 		model: openai('gpt-4o-mini'),
 		messages: convertToCoreMessages(messages),
